@@ -1,13 +1,19 @@
 const {exec} = require('child_process')
-const logger = require('../logger')
 const path = require('path')
 const config = require('../config')
 const file = require('../file')
 const events = require('events');
 const sender = new events.EventEmitter()
+const logger = require('../logger')
 
-const router = async (message)=>{
-    switch (message.order){
+const router = async (socket,data)=>{
+    let message
+    try {
+        message = JSON.parse(data)
+    }catch (e){
+        logger.warn(`处理Json数据时发生错误:${e.message()}`)
+    }
+    switch (message.target){
         case 'update':
             await updateClient()
         break
