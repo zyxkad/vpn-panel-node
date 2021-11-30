@@ -1,4 +1,5 @@
 const color = require('colors')
+const {sender} = require('./src/command')
 
 module.exports = {
     debug(message) {
@@ -8,6 +9,7 @@ module.exports = {
         console.log('[' + color.red(new Date().toLocaleTimeString()) + ']' + color.magenta(message));
     },
     warn(message) {
+        sender.emit('send',{target:'message',message:message})
         console.log('[' + color.red(new Date().toLocaleTimeString()) + ']' + color.red(message));
     }
 }
