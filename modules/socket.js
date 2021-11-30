@@ -1,5 +1,6 @@
 const client = require('net')
 const config = require('./config').get('server')
+const version = require('./config').get('client.version')
 const logger = require('./logger')
 const { Stick, MaxBodyLen } = require('@lvgithub/stick/index');
 const {router,sender} = require('./src/command')
@@ -13,7 +14,7 @@ function connectToServer (){
 
     socket.on('connect',()=>{
         logger.info(`正在连接....`)
-        const data = stick.makeData(JSON.stringify({target:'register'}))
+        const data = stick.makeData(JSON.stringify({target:'register',version:version}))
         socket.write(data)
     })
 

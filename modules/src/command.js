@@ -33,7 +33,15 @@ const router = async (socket,data)=>{
         case 'getPSK':
             await getPSK()
         break
+
+        case 'getVersion':
+            await getVersion()
+        break
     }
+}
+
+const getVersion = async () => {
+    sender.emit('send',{target:'version',version:config.get('client.version')})
 }
 
 const getPSK = async () => {
