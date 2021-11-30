@@ -6,6 +6,7 @@ const router = async (message)=>{
     switch (message.order){
         case 'update':
             await updateClient()
+            console.log('update')
         break
 
         case 'reboot':
