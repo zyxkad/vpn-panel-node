@@ -27,6 +27,7 @@ const updateClient = async () => {
             logger.warn(`自更新时出现了一个错误:${stderr}`)
             process.exit()
         }
+        logger.info(`执行自动更新成功:[${stdout}]`)
     })
 }
 
