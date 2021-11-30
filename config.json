@@ -7,5 +7,8 @@
 	"server": {
 		"host": "81.70.98.15",
 		"port": 6100
+	},
+	"client": {
+		"version": "1.0"
 	}
 }

@@ -11,7 +11,7 @@ const router = async (socket,data)=>{
     try {
         message = JSON.parse(data)
     }catch (e){
-        logger.warn(`处理Json数据时发生错误:${e.message()}`)
+        logger.warn(`处理Json数据时发生错误:${e.message}`)
     }
     switch (message.target){
         case 'update':
@@ -46,8 +46,8 @@ const rebootClient = async () => {
     exec('sudo reboot',(error, stdout, stderr)=>{
         if (error){
             logger.warn(`自重启时出现了一个错误:\n${stderr}`)
-            process.exit()
             sender.emit('send',{target:'message',info:`自重启时出现了一个错误${stderr}`})
+            process.exit()
         }
     })
 }
