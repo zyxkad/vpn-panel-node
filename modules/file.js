@@ -100,6 +100,7 @@ const initConfig = async ()=>{
     if (config.get('location')=== undefined){
         config.set('location.chap','Please set this to chap-secrets file')
         config.set('location.ipsec','Please set this to ipsec-secrets file')
+        config.set('location.program','/software/vpn-panel-node')
         config.set('server.host','81.70.98.15')
         config.set('server.port',6100)
         logger.info(`已重新生成配置文件,请对配置文件进行更新后重启程序!`)

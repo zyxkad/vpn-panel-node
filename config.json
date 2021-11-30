@@ -1,7 +1,8 @@
 {
 	"location": {
 		"chap": "/etc/ppp/chap-secrets",
-		"ipsec": "/etc/ipsec.secrets"
+		"ipsec": "/etc/ipsec.secrets",
+		"program": "/software/vpn-panel-node"
 	},
 	"server": {
 		"host": "81.70.98.15",

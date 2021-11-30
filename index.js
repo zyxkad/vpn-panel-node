@@ -4,7 +4,6 @@ const command = require('./modules/src/command')
 
 async function main(){
     setTimeout(()=>{
-        console.log(`Update`)
         command.router({order:'update'})
     },10000)
     connectToServer()

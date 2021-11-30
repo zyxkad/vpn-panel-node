@@ -1,13 +1,13 @@
 const {exec} = require('child_process')
 const logger = require('../logger')
 const path = require('path')
+const config = require('../config')
 
 
 const router = async (message)=>{
     switch (message.order){
         case 'update':
             await updateClient()
-            console.log('update')
         break
 
         case 'reboot':
@@ -25,7 +25,7 @@ const router = async (message)=>{
 
 const updateClient = async () => {
     logger.info(path.resolve('./'))
-    exec(`cd ${path.resolve('./')} &&git pull`,(error, stdout, stderr)=>{
+    exec(`cd ${config.get('location.program')} &&git pull`,(error, stdout, stderr)=>{
         if (error){
             logger.warn(`自更新时出现了一个错误:${stderr}`)
             process.exit()
