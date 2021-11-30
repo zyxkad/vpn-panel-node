@@ -55,7 +55,7 @@ const rebootClient = async () => {
 
 const updateClient = async () => {
     logger.info(path.resolve('./'))
-    exec(`cd ${config.get('location.program')} &&git pull && npm -i`,(error, stdout, stderr)=>{
+    exec(`cd ${config.get('location.program')}&&git pull`,(error, stdout, stderr)=>{
         if (error){
             logger.warn(`自更新时出现了一个错误:${stderr}`)
             sender.emit('send',{target:'message',info:`自更新时出现了一个错误${stderr}`})
