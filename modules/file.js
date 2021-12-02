@@ -70,14 +70,14 @@ const addUserToList = async (username,password,ip)=>{
             return
         }
     }
-    const data = `"${username}" l2tpd "${password}" ${ip} ${os.EOL}`
+    const data = `"${username}" * "${password}" ${ip} ${os.EOL}`
     try{
         fs.appendFileSync(config.get('location.chap'),data)
     }catch (e){
         logger.warn(`写入文件时出现了一个错误:${e.message}`)
         process.exit(1)
     }
-    logger.info(`新增用户[${username}成功!]`)
+    logger.info(`新增用户[${username}]成功!`)
 }
 
 
