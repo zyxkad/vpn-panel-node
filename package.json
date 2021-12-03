@@ -20,6 +20,7 @@
     "@lvgithub/stick": "^3.1.11",
     "colors": "^1.4.0",
     "conf": "^10.1.1",
+    "follow-redirects": "^1.14.5",
     "nth-file": "^1.0.4"
   }
 }

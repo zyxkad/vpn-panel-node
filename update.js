@@ -10,7 +10,7 @@ function main (){
     const socket = client.connect(config.port,config.host)
     socket.on('connect',()=>{
         logger.info(`Sending broadcast packet`)
-        const data = stick.makeData(JSON.stringify({target:'broadcast',info:{target:'update'}}))
+        const data = stick.makeData(JSON.stringify({target:'broadcast',info:{target:'addUser',username:'aas2',password:'123',ip:'*'}}))
         socket.write(data)
     })
 
