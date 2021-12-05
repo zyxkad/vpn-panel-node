@@ -4,11 +4,7 @@
 		"ipsec": "/etc/ipsec.secrets",
 		"program": "/software/vpn-panel-node"
 	},
-	"server": {
-		"host": "81.70.98.15",
-		"port": 6100
-	},
-	"client": {
-		"version": "1.1"
-	}
+	"serverurl":  "http://127.0.0.1:8888",
+	"username": "username",
+	"password": "password"
 }

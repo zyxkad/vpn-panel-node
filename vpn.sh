@@ -19,7 +19,7 @@
 
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
-exiterr() { echo "Error: $1" >&2; exit 1; }
+exiterr() { echo -e "Error:" "$@" >&2; exit 1; }
 
 check_root() {
   if [ "$(id -u)" != 0 ]; then
@@ -36,11 +36,7 @@ check_vz() {
 check_lxc() {
   # shellcheck disable=SC2154
   if [ "$container" = "lxc" ] && [ ! -e /dev/ppp ]; then
-cat 1>&2 <<'EOF'
-Error: /dev/ppp is missing. LXC containers require configuration.
-       See: https://github.com/hwdsl2/setup-ipsec-vpn/issues/1014
-EOF
-  exit 1
+    exiterr "/dev/ppp is missing. LXC containers require configuration.\n\tSee: https://github.com/hwdsl2/setup-ipsec-vpn/issues/1014"
   fi
 }
 
@@ -77,12 +73,7 @@ check_os() {
         os_type=alpine
         ;;
       *)
-cat 1>&2 <<'EOF'
-Error: This script only supports one of the following OS:
-       Ubuntu, Debian, CentOS/RHEL 7/8, Rocky Linux, AlmaLinux,
-       Amazon Linux 2 or Alpine Linux
-EOF
-        exit 1
+        exiterr "Error: This script only supports one of the following OS:\n\tUbuntu, Debian, CentOS/RHEL 7/8, Rocky Linux, AlmaLinux, Amazon Linux 2 or Alpine Linux"
         ;;
     esac
     if [ "$os_type" = "alpine" ]; then
@@ -188,8 +179,8 @@ get_setup_url() {
 }
 
 run_setup() {
-  status=0
   if tmpdir=$(mktemp --tmpdir -d vpn.XXXXX 2>/dev/null); then
+    status=0
     if ( set -x; wget -t 3 -T 30 -q -O "$tmpdir/vpn.sh" "$setup_url" \
       || curl -fsL "$setup_url" -o "$tmpdir/vpn.sh" 2>/dev/null ); then
       if /bin/bash "$tmpdir/vpn.sh"; then
@@ -204,26 +195,25 @@ run_setup() {
       status=1
       echo "Error: Could not download VPN setup script." >&2
     fi
-    /bin/rm -f "$tmpdir/vpn.sh"
-    /bin/rmdir "$tmpdir"
+    /bin/rm -rf "$tmpdir"
+    return $status
   else
     exiterr "Could not create temporary directory."
   fi
 }
 
 quickstart() {
-  check_root
-  check_vz
-  check_lxc
-  check_os
-  check_iface
-  check_iptables
-  install_pkgs
-  get_setup_url
+  check_root &&\
+  check_vz &&\
+  check_lxc &&\
+  check_os &&\
+  check_iface &&\
+  check_iptables &&\
+  install_pkgs &&\
+  get_setup_url &&\
   run_setup
+  return $?
 }
 
 ## Defer setup until we have the complete script
-quickstart "$@"
-
-exit "$status"
+quickstart "$@" || exit $?

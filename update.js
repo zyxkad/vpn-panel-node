@@ -1,12 +1,9 @@
 const config = require('./modules/config').get('server')
 const logger = require('./modules/logger')
 const client = require('net')
-const { Stick, MaxBodyLen } = require('@lvgithub/stick/index');
 
 function main (){
     logger.info(`Trying to connect to server...`)
-    const stick = new Stick(1024);
-    stick.setMaxBodyLen(MaxBodyLen['32K']);
     const socket = client.connect(config.port,config.host)
     socket.on('connect',()=>{
         logger.info(`Sending broadcast packet`)
